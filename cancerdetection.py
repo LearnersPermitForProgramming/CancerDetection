@@ -21,6 +21,7 @@ from sklearn.model_selection import train_test_split
 import fnmatch
 from progressbar import printProgressBar
 import time 
+import numpy as np
 
 imagePatches = glob('/mnt/c/Users/shobh/Documents/breast-histopathology-images/IDC_regular_ps50_idx5/**/*.png', recursive=True)
 
@@ -88,8 +89,32 @@ create_training_data()
 
 print(trainingData)
 #print("\n" + len(trainingData))
+
+import random
+
+random.shuffle(trainingData)
+
+for sample in trainingData:
+    print(sample[1])
  
 
+X = []
+y = []
+
+for features, label in trainingData:
+    X.append(features)
+    y.append(label)
+
+X = np.array(X).reshape(-1, 50, 50, 1)
+
+import pickle
+pickle_out = open("X.pickle", "wb")
+pickle.dump(X, pickle_out)
+pickle_out.close()
+
+pickle_out = open("y.pickle", "wb")
+pickle.dump(y, pickle_out)
+pickle_out.close()
 
 
 # image_name = imagePatches[0]
