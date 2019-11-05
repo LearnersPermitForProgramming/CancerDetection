@@ -20,7 +20,7 @@ from PIL import Image
 from sklearn.model_selection import train_test_split
 import fnmatch
 from progressbar import printProgressBar
-import time 
+import time
 import numpy as np
 
 imagePatches = glob('/mnt/c/Users/shobh/Documents/breast-histopathology-images/IDC_regular_ps50_idx5/**/*.png', recursive=True)
@@ -48,7 +48,7 @@ CATEGORIES = ["BENIGN", "MALIGNANT"]
 
 
 
-#Initialize crazy function 
+#Initialize crazy function
 def create_training_data():
     patternZero = '*class0.png'
     patternOne = '*class1.png'
@@ -60,12 +60,12 @@ def create_training_data():
     for i, filename in enumerate(classZero[0:1000]):
         #print(filename)
         try:
-            
+
             im_array = cv2.imread(filename, cv2.IMREAD_GRAYSCALE)
             new_array = cv2.resize(im_array, (50, 50))
             trainingData.append([new_array, 0])
             time.sleep(0.1)
-            printProgressBar(i + 1, l1, prefix = 'Progress:', suffix = 'Complete', length = 50)  
+            printProgressBar(i + 1, l1, prefix = 'Progress:', suffix = 'Complete', length = 50)
         except Exception as e:
             print(e)
             pass
@@ -75,7 +75,7 @@ def create_training_data():
             new_array = cv2.resize(im_array, (50, 50))
             trainingData.append([new_array, 1])
             time.sleep(0.1)
-            printProgressBar(i + 1, l2, prefix = 'Progress:', suffix = 'Complete', length = 50)  
+            printProgressBar(i + 1, l2, prefix = 'Progress:', suffix = 'Complete', length = 50)
         except Exception as e:
             print(e)
             pass
@@ -96,12 +96,13 @@ random.shuffle(trainingData)
 
 for sample in trainingData:
     print(sample[1])
- 
+
 
 X = []
 y = []
 
 for features, label in trainingData:
+    print(features)
     X.append(features)
     y.append(label)
 
@@ -120,10 +121,10 @@ pickle_out.close()
 # image_name = imagePatches[0]
 
 
-# 
-# 
+#
+#
 # print(classZero)
-# (train_images, train_labels) = imagePatches 
+# (train_images, train_labels) = imagePatches
 
 # # Normalize pixel values to be between 0 and 1
 # train_images = imagePatches / 255.0
@@ -136,7 +137,7 @@ pickle_out.close()
 #     plt.yticks([])
 #     plt.grid(False)
 #     plt.imshow(train_images[i])
-#     # The CIFAR labels happen to be arrays, 
+#     # The CIFAR labels happen to be arrays,
 #     # which is why you need the extra index
 # plt.show()
 
@@ -147,9 +148,5 @@ pickle_out.close()
 #     plt.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
 #     plt.axis('off')
 #     plt.show()
-    
+
 # plotImage(image_name)
-
-
-
-
